@@ -20,6 +20,6 @@ interface iDependencyResolver {
 
     public function getPathFromCache($className);
 
-    public function getInstance();
+    public static function getInstance();
 
 }

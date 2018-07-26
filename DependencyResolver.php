@@ -88,7 +88,7 @@ class DependencyResolver implements iDependencyResolver
         }
     }
 
-    public function getInstance()
+    public static function getInstance()
     {
         if (!isset(static::$instance)) {
             static::$instance = new static;
