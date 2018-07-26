@@ -1,4 +1,5 @@
 {
+  "minimum-stability": "dev",
   "autoload": {
     "psr-4": {
       "Backslash\\Resolver\\": "/"
