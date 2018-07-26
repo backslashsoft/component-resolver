@@ -6,7 +6,7 @@
  * Time: 13:20
  */
 
-namespace Backslash\DependencyResolver;
+namespace Backslash\Resolver;
 
 interface iDependencyResolver {
 

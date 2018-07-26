@@ -6,9 +6,9 @@
  * Time: 13:20
  */
 
-namespace Backslash\DependencyResolver;
+namespace Backslash\Resolver;
 
-use Gdev\DependencyResolver\Exceptions\DependencyResolverException;
+use Backslash\Resolver\Exceptions\DependencyResolverException;
 
 class DependencyResolver implements iDependencyResolver
 {

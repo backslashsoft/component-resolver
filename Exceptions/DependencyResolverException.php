@@ -6,7 +6,7 @@
  * Time: 13:47
  */
 
-namespace Gdev\DependencyResolver\Exceptions;
+namespace Backslash\Resolver\Exceptions;
 
 use Exception;
 
