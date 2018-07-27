@@ -23,7 +23,6 @@ class DependencyResolver implements iDependencyResolver
 
     public function Map()
     {
-
         $results = [];
         $files = scandir(static::FALLBACK_PATH);
 
@@ -42,23 +41,25 @@ class DependencyResolver implements iDependencyResolver
 
     public function Resolve($className)
     {
-
         $this->validate();
 
-        $path = $this->getPathFromCache($className);
+        $fullClassName = $this->getFullClassNameFromCache($className);
 
-        if (empty($path)) {
+        if (empty($fullClassName)) {
             if (file_exists(static::DEFAULT_PATH . $className . ".php")) {
-                $path = static::DEFAULT_PATH;
+                $namespace = static::DEFAULT_NAMESPACE;
+            } elseif (file_exists(static::FALLBACK_PATH . $className . ".php")) {
+                $namespace = static::FALLBACK_NAMESPACE;
             } else {
-                if (file_exists(static::FALLBACK_PATH . $className . ".php")) {
-                    $path = static::FALLBACK_PATH;
-                }
+                throw new DependencyResolverException(sprintf("Class %s does not exist.", $className));
             }
-            $this->setPathToCache($className, $path);
+
+            $fullClassName = $namespace . "\\" . $className;
+
+            $this->setFullClassNameToCache($className, $fullClassName);
         }
 
-        return $path;
+        return $fullClassName;
     }
 
     public function Validate()
@@ -83,7 +84,7 @@ class DependencyResolver implements iDependencyResolver
             $exceptionExists = true;
         }
 
-        if($exceptionExists){
+        if ($exceptionExists) {
             throw new DependencyResolverException($missingConstants . " not defined");
         }
     }
@@ -96,18 +97,18 @@ class DependencyResolver implements iDependencyResolver
         return static::$instance;
     }
 
-    public function setPathToCache($className, $path)
+    public function setFullClassNameToCache($className, $fullClassName)
     {
-        $this->Cache[$className] = $path;
+        $this->Cache[$className] = $fullClassName;
     }
 
-    public function getPathFromCache($className)
+    public function getFullClassNameFromCache($className)
     {
         $path = null;
         if (array_key_exists($className, $this->Cache)) {
-            $path = $this->Cache[$className];
+            $fullClassName = $this->Cache[$className];
         }
-        return $path;
+        return $fullClassName;
     }
 
 }

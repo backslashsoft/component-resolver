@@ -16,9 +16,9 @@ interface iDependencyResolver {
 
     public function Validate();
 
-    public function setPathToCache($className, $path);
+    public function setFullClassNameToCache($className, $fullClassName);
 
-    public function getPathFromCache($className);
+    public function getFullClassNameFromCache($className);
 
     public static function getInstance();
 
