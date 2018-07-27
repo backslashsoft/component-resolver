@@ -25,11 +25,11 @@ class DependencyResolver implements iDependencyResolver
     {
 
         $results = [];
-        $files = scandir(self::FALLBACK_PATH);
+        $files = scandir(static::FALLBACK_PATH);
 
         if ($files != false && count($files) > 0) {
             foreach ($files as $file) {
-                $file_parts = pathinfo(self::FALLBACK_PATH . '/' . $file);
+                $file_parts = pathinfo(static::FALLBACK_PATH . '/' . $file);
                 if ($file_parts['extension'] == "php") {
                     $className = $file_parts['filename'];
                     $results[$className] = self::Resolve($className);
@@ -48,11 +48,11 @@ class DependencyResolver implements iDependencyResolver
         $path = $this->getPathFromCache($className);
 
         if (empty($path)) {
-            if (file_exists(self::DEFAULT_PATH . $className)) {
-                $path = self::DEFAULT_PATH;
+            if (file_exists(static::DEFAULT_PATH . $className . ".php")) {
+                $path = static::DEFAULT_PATH;
             } else {
-                if (file_exists(self::FALLBACK_PATH . $className)) {
-                    $path = self::FALLBACK_PATH;
+                if (file_exists(static::FALLBACK_PATH . $className . ".php")) {
+                    $path = static::FALLBACK_PATH;
                 }
             }
             $this->setPathToCache($className, $path);
@@ -66,19 +66,19 @@ class DependencyResolver implements iDependencyResolver
         $exceptionExists = false;
         $missingConstants = "";
 
-        if (!defined('self::DEFAULT_PATH') && empty(self::DEFAULT_PATH)) {
+        if (!defined('static::DEFAULT_PATH') && empty(static::DEFAULT_PATH)) {
             $exceptionExists = true;
             $missingConstants .= "DEFAULT_PATH";
         }
-        if (!defined('self::FALLBACK_PATH') && empty(self::FALLBACK_PATH)) {
+        if (!defined('static::FALLBACK_PATH') && empty(static::FALLBACK_PATH)) {
             $exceptionExists ? $missingConstants .= " / FALLBACK_PATH" : $missingConstants .= "FALLBACK_PATH";
             $exceptionExists = true;
         }
-        if (!defined('self::DEFAULT_NAMESPACE') && empty(self::DEFAULT_NAMESPACE)) {
+        if (!defined('static::DEFAULT_NAMESPACE') && empty(static::DEFAULT_NAMESPACE)) {
             $exceptionExists ? $missingConstants .= " / DEFAULT_NAMESPACE" : $missingConstants .= "DEFAULT_NAMESPACE";
             $exceptionExists = true;
         }
-        if (!defined('self::FALLBACK_NAMESPACE') && empty(self::FALLBACK_NAMESPACE)) {
+        if (!defined('static::FALLBACK_NAMESPACE') && empty(static::FALLBACK_NAMESPACE)) {
             $exceptionExists ? $missingConstants .= " / FALLBACK_NAMESPACE" : $missingConstants .= "FALLBACK_NAMESPACE";
             $exceptionExists = true;
         }
