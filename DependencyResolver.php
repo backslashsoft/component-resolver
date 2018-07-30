@@ -24,7 +24,9 @@ class DependencyResolver implements iDependencyResolver
     public function Map()
     {
         $results = [];
-        $files = scandir(static::FALLBACK_PATH);
+        $filesFromCallbackPath = scandir(static::FALLBACK_PATH);
+        $filesFromDefaultPath = scandir(static::DEFAULT_PATH);
+        $files = array_merge($filesFromCallbackPath, $filesFromDefaultPath);
 
         if ($files != false && count($files) > 0) {
             foreach ($files as $file) {
