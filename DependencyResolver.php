@@ -104,7 +104,7 @@ class DependencyResolver implements iDependencyResolver
 
     public function getFullClassNameFromCache($className)
     {
-        $path = null;
+        $fullClassName = null;
         if (array_key_exists($className, $this->Cache)) {
             $fullClassName = $this->Cache[$className];
         }
