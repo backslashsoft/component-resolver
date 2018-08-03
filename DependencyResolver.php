@@ -30,13 +30,12 @@ class DependencyResolver implements iDependencyResolver
 
         if ($files != false && count($files) > 0) {
             foreach ($files as $file) {
-                if(is_file($file)){
-                    $file_parts = pathinfo(static::FALLBACK_PATH . '/' . $file);
-                    if ($file_parts['extension'] == "php") {
-                        $className = $file_parts['filename'];
-                        $results[$className] = self::Resolve($className);
-                    }
+                $file_parts = pathinfo(static::FALLBACK_PATH . '/' . $file);
+                if (isset($file_parts['extension']) && $file_parts['extension'] == "php") {
+                    $className = $file_parts['filename'];
+                    $results[$className] = self::Resolve($className);
                 }
+
             }
         }
 
