@@ -92,12 +92,21 @@ class DependencyResolver implements iDependencyResolver
         }
     }
 
-    public static function getInstance()
+    final public static function getInstance()
     {
-        if (!isset(static::$instance)) {
-            static::$instance = new static;
+        static $instances = array();
+
+        $calledClass = get_called_class();
+
+        if (!isset($instances[$calledClass])) {
+            $instances[$calledClass] = new $calledClass();
         }
-        return static::$instance;
+
+        return $instances[$calledClass];
+    }
+
+    final private function __clone()
+    {
     }
 
     public function setFullClassNameToCache($className, $fullClassName)
